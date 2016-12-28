@@ -1,0 +1,73 @@
+buildDir='build/artifacts'
+
+apply plugin: 'java'
+
+repositories {
+	mavenCentral()
+	maven { url "http://repo.bodar.com" }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+            include "**/*.java"
+        }
+
+        resources {
+            srcDirs = ['src']
+
+            exclude "*.java"
+        }
+
+        output.resourcesDir = "$buildDir/classes/main"
+    }
+    test {
+        java {
+            srcDirs = ['test']
+        }
+
+        resources {
+            srcDirs = ['test']
+            exclude "*.java"
+        }
+
+        output.resourcesDir = "$buildDir/classes/test"
+    }
+}
+
+dependencies {
+
+    compile 'cglib:cglib-nodep:2.2'
+    compile 'org.hamcrest:hamcrest-core:1.2'
+    compile 'org.hamcrest:hamcrest-library:1.2'
+    compile 'javax.servlet:javax.servlet-api:3.1.0'
+    compile 'org.eclipse.jetty:jetty-http:9.3.14.v20161028'
+    compile 'org.eclipse.jetty:jetty-io:9.3.14.v20161028'
+    compile 'org.eclipse.jetty:jetty-server:9.3.14.v20161028'
+    compile 'org.eclipse.jetty:jetty-servlet:9.3.14.v20161028'
+    compile 'org.eclipse.jetty:jetty-util:9.3.14.v20161028'
+    compile 'org.eclipse.jetty:jetty-webapp:9.3.14.v20161028'
+    compile 'com.googlecode.lazyrecords:lazyrecords:1.28'
+    compile 'org.sitemesh:sitemesh:3.0.0'
+    compile 'com.googlecode.totallylazy:totallylazy:1.85'
+    compile 'com.googlecode.yadic:yadic:1.19'
+
+    runtime 'org.objenesis:objenesis:1.2'
+
+    testCompile 'junit:junit:4.12'
+
+    // Dependencies not used by oscar
+    compile 'org.ccil.cowan.tagsoup:tagsoup:1.2'
+    compile 'io.undertow:undertow-core:1.2.12.Final'
+
+
+    //mvn:io.undertow:undertow-servlet:jar|sources:1.2.12.Final
+
+    //mvn:org.simpleframework:simple-common:jar|sources:6.0.1
+    compile 'org.simpleframework:simple-http:6.0.1'
+    //mvn:org.simpleframework:simple-transport:jar|sources:6.0.1
+
+    //mvn:org.mortbay.jetty:jetty-util:jar|sources:6.1.26
+    compile 'org.mortbay.jetty:jetty:6.1.26'
+}

@@ -11,3 +11,7 @@ lib/*
 test/**/s3.properties
 test/**/aws.properties
 *~
+
+.gradle/
+.idea/
+classes/
