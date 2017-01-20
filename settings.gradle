@@ -2,3 +2,7 @@ include ":yadic"
 project(":yadic").projectDir = new File(settingsDir, "../yadic")
 include ":totallylazy"
 project(":totallylazy").projectDir = new File(settingsDir, "../totallylazy")
+include ":lazyrecords"
+project(":lazyrecords").projectDir = new File(settingsDir, "../lazyrecords")
+include ":lazyparsec"
+project(":lazyparsec").projectDir = new File(settingsDir, "../lazyparsec")
