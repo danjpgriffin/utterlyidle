@@ -72,7 +72,4 @@ dependencies {
     compile 'org.simpleframework:simple-http:6.0.1'
     compile 'org.simpleframework:simple-transport:6.0.1'
     compile 'org.simpleframework:simple-common:6.0.1'
-
-    compile 'org.mortbay.jetty:jetty:6.1.26'
-    compile 'org.mortbay.jetty:jetty-util:6.1.26'
 }
