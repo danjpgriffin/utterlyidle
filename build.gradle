@@ -7,6 +7,10 @@ repositories {
 	maven { url "http://repo.bodar.com" }
 }
 
+configurations.all {
+    transitive = false
+}
+
 sourceSets {
     main {
         java {
@@ -50,8 +54,8 @@ dependencies {
     compile 'org.eclipse.jetty:jetty-webapp:9.3.14.v20161028'
     compile 'com.googlecode.lazyrecords:lazyrecords:1.28'
     compile 'org.sitemesh:sitemesh:3.0.0'
-    compile 'com.googlecode.totallylazy:totallylazy:1.85'
-    compile 'com.googlecode.yadic:yadic:1.19'
+    compile project(':totallylazy')
+    compile project(':yadic')
 
     runtime 'org.objenesis:objenesis:1.2'
 
@@ -60,14 +64,15 @@ dependencies {
     // Dependencies not used by oscar
     compile 'org.ccil.cowan.tagsoup:tagsoup:1.2'
     compile 'io.undertow:undertow-core:1.2.12.Final'
+    runtime 'org.jboss.xnio:xnio-api:3.3.1.Final'
+    runtime 'org.jboss.xnio:xnio-nio:3.3.1.Final'
+    runtime 'org.jboss.logging:jboss-logging:3.1.4.GA'
 
 
-    //mvn:io.undertow:undertow-servlet:jar|sources:1.2.12.Final
-
-    //mvn:org.simpleframework:simple-common:jar|sources:6.0.1
     compile 'org.simpleframework:simple-http:6.0.1'
-    //mvn:org.simpleframework:simple-transport:jar|sources:6.0.1
+    compile 'org.simpleframework:simple-transport:6.0.1'
+    compile 'org.simpleframework:simple-common:6.0.1'
 
-    //mvn:org.mortbay.jetty:jetty-util:jar|sources:6.1.26
     compile 'org.mortbay.jetty:jetty:6.1.26'
+    compile 'org.mortbay.jetty:jetty-util:6.1.26'
 }

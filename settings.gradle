@@ -1,1 +1,4 @@
-rootProject.name = 'utterlyidle'
+include ":yadic"
+project(":yadic").projectDir = new File(settingsDir, "../yadic")
+include ":totallylazy"
+project(":totallylazy").projectDir = new File(settingsDir, "../totallylazy")
