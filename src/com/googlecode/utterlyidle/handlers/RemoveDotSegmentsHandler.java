@@ -4,7 +4,7 @@ import com.googlecode.utterlyidle.HttpHandler;
 import com.googlecode.utterlyidle.Request;
 import com.googlecode.utterlyidle.Response;
 
-import static com.googlecode.utterlyidle.RequestBuilder.modify;
+//import static com.googlecode.utterlyidle.RequestBuilder.modify;
 
 public class RemoveDotSegmentsHandler implements HttpHandler {
     private final HttpHandler httpHandler;
@@ -15,6 +15,7 @@ public class RemoveDotSegmentsHandler implements HttpHandler {
 
     @Override
     public Response handle(final Request request) throws Exception {
-        return httpHandler.handle(modify(request).uri(request.uri().removeDotSegments()).build());
+        throw new RuntimeException("DAN");
+        //return httpHandler.handle(modify(request).uri(request.uri().removeDotSegments()).build());
     }
 }

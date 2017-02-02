@@ -6,16 +6,16 @@ import com.googlecode.totallylazy.Pair;
 import com.googlecode.totallylazy.Predicate;
 import com.googlecode.totallylazy.Sequence;
 import com.googlecode.yadic.Container;
-import com.googlecode.yadic.generics.TypeFor;
-import com.googlecode.yadic.resolvers.ProgrammerErrorResolver;
+//import com.googlecode.yadic.generics.TypeFor;
+//import com.googlecode.yadic.resolvers.ProgrammerErrorResolver;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.googlecode.totallylazy.Debug.debugging;
-import static com.googlecode.yadic.resolvers.Resolvers.create;
+//import static com.googlecode.totallylazy.Debug.debugging;
+//import static com.googlecode.yadic.resolvers.Resolvers.create;
 
 public class ParametersExtractor implements RequestExtractor<Object[]> {
     private final UriTemplate uriTemplate;
@@ -41,48 +41,49 @@ public class ParametersExtractor implements RequestExtractor<Object[]> {
     }
 
     public Object[] extract(final Request request) {
-        return typesWithNamedParameter.map(new Callable1<Pair<Type, Option<Parameter>>, Object>() {
-            public Object call(Pair<Type, Option<Parameter>> pair) throws Exception {
-                return application.usingArgumentScope(request, resolveParameter(pair));
-            }
-        }).toArray(Object.class);
+        throw new RuntimeException("DAN");
+//        return typesWithNamedParameter.map(new Callable1<Pair<Type, Option<Parameter>>, Object>() {
+//            public Object call(Pair<Type, Option<Parameter>> pair) throws Exception {
+//                return application.usingArgumentScope(request, resolveParameter(pair));
+//            }
+//        }).toArray(Object.class);
     }
 
-    private Callable1<Container, Object> resolveParameter(final Pair<Type, Option<Parameter>> pair) {
-        return new Callable1<Container, Object>() {
-            public Object call(Container container) throws Exception {
-                final Type type = pair.first();
-                final Option<Parameter> optionalParameter = pair.second();
-
-                container.addInstance(UriTemplate.class, uriTemplate);
-
-
-                for (Parameter parameter : optionalParameter) {
-                    parameter.addTo(container);
-                }
-
-                if (!container.contains(String.class)) {
-                    container.addType(String.class, new ProgrammerErrorResolver(String.class));
-                }
-
-                final Type iterableStringType = new TypeFor<Iterable<String>>() {}.get();
-                if (!container.contains(iterableStringType)) {
-                    container.addType(iterableStringType, new ProgrammerErrorResolver(iterableStringType));
-                }
-
-                List<Type> types = typeArgumentsOf(type);
-
-                for (Type t : types) {
-                    if (!container.contains(t)) {
-                        container.addType(t, create(t, container));
-                    }
-                }
-
-                return container.resolve(type);
-
-            }
-        };
-    }
+//    private Callable1<Container, Object> resolveParameter(final Pair<Type, Option<Parameter>> pair) {
+//        return new Callable1<Container, Object>() {
+//            public Object call(Container container) throws Exception {
+//                final Type type = pair.first();
+//                final Option<Parameter> optionalParameter = pair.second();
+//
+//                container.addInstance(UriTemplate.class, uriTemplate);
+//
+//
+//                for (Parameter parameter : optionalParameter) {
+//                    parameter.addTo(container);
+//                }
+//
+//                if (!container.contains(String.class)) {
+//                    container.addType(String.class, new ProgrammerErrorResolver(String.class));
+//                }
+//
+//                final Type iterableStringType = new TypeFor<Iterable<String>>() {}.get();
+//                if (!container.contains(iterableStringType)) {
+//                    container.addType(iterableStringType, new ProgrammerErrorResolver(iterableStringType));
+//                }
+//
+//                List<Type> types = typeArgumentsOf(type);
+//
+//                for (Type t : types) {
+//                    if (!container.contains(t)) {
+//                        container.addType(t, create(t, container));
+//                    }
+//                }
+//
+//                return container.resolve(type);
+//
+//            }
+//        };
+//    }
 
     public static List<Type> typeArgumentsOf(Type type) {
         List<Type> types = new ArrayList<Type>();
@@ -102,11 +103,12 @@ public class ParametersExtractor implements RequestExtractor<Object[]> {
     }
 
     public static Predicate<Binding> parametersMatches(final Request request, final Application application, final ExceptionLogger logger) {
-        return new Predicate<Binding>() {
-            public boolean matches(Binding binding) {
-                return new ParametersExtractor(binding.uriTemplate(), application, binding.parameters(), logger).matches(request);
-            }
-        };
+        throw new RuntimeException("DAN");
+//        return new Predicate<Binding>() {
+//            public boolean matches(Binding binding) {
+//                return new ParametersExtractor(binding.uriTemplate(), application, binding.parameters(), logger).matches(request);
+//            }
+//        };
     }
 
 }

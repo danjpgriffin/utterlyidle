@@ -1,6 +1,6 @@
 package com.googlecode.utterlyidle.dsl;
 
-import com.googlecode.totallylazy.LazyException;
+//import com.googlecode.totallylazy.LazyException;
 import com.googlecode.totallylazy.Uri;
 import com.googlecode.utterlyidle.HttpHandler;
 import com.googlecode.utterlyidle.RequestBuilder;
@@ -15,14 +15,15 @@ import static com.googlecode.totallylazy.Uri.uri;
 
 public class StaticResources {
     public Response get(URL baseUrl, String filename) {
-        try {
-            Uri original = uri(baseUrl).mergePath(filename);
-            Uri normalise = original.removeDotSegments();
-            if (!original.equals(normalise)) return Responses.response(Status.NOT_FOUND);
-            HttpHandler handler = new ClientHttpHandler();
-            return handler.handle(RequestBuilder.get(original).build());
-        } catch (Exception e) {
-            throw LazyException.lazyException(e);
-        }
+        throw new RuntimeException("DAN");
+//        try {
+//            Uri original = uri(baseUrl).mergePath(filename);
+//            Uri normalise = original.removeDotSegments();
+//            if (!original.equals(normalise)) return Responses.response(Status.NOT_FOUND);
+//            HttpHandler handler = new ClientHttpHandler();
+//            return handler.handle(RequestBuilder.get(original).build());
+//        } catch (Exception e) {
+//            throw LazyException.lazyException(e);
+//        }
     }
 }

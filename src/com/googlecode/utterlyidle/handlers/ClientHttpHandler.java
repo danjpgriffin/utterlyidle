@@ -1,29 +1,32 @@
 package com.googlecode.utterlyidle.handlers;
 
-import com.googlecode.totallylazy.Bytes;
-import com.googlecode.totallylazy.Callable1;
-import com.googlecode.totallylazy.Callable2;
-import com.googlecode.totallylazy.Exceptions;
-import com.googlecode.totallylazy.Fields;
-import com.googlecode.totallylazy.Files;
-import com.googlecode.totallylazy.Function;
-import com.googlecode.totallylazy.Mapper;
-import com.googlecode.totallylazy.Option;
-import com.googlecode.totallylazy.Pair;
-import com.googlecode.totallylazy.Uri;
-import com.googlecode.totallylazy.annotations.multimethod;
-import com.googlecode.totallylazy.collections.CloseableList;
-import com.googlecode.totallylazy.multi;
-import com.googlecode.totallylazy.time.Dates;
-import com.googlecode.utterlyidle.ClientConfiguration;
-import com.googlecode.utterlyidle.HttpHeaders;
-import com.googlecode.utterlyidle.MediaType;
+//import com.googlecode.totallylazy.Bytes;
+//import com.googlecode.totallylazy.Callable1;
+//import com.googlecode.totallylazy.Callable2;
+//import com.googlecode.totallylazy.Exceptions;
+//import com.googlecode.totallylazy.Fields;
+//import com.googlecode.totallylazy.Files;
+//import com.googlecode.totallylazy.Function;
+//import com.googlecode.totallylazy.Mapper;
+//import com.googlecode.totallylazy.Option;
+//import com.googlecode.totallylazy.Pair;
+//import com.googlecode.totallylazy.Uri;
+//import com.googlecode.totallylazy.annotations.multimethod;
+//import com.googlecode.totallylazy.collections.CloseableList;
+//import com.googlecode.totallylazy.multi;
+//import com.googlecode.totallylazy.time.Dates;
+//import com.googlecode.utterlyidle.ClientConfiguration;
+//import com.googlecode.utterlyidle.HttpHeaders;
+//import com.googlecode.utterlyidle.MediaType;
+//import com.googlecode.utterlyidle.Request;
+//import com.googlecode.utterlyidle.Response;
+//import com.googlecode.utterlyidle.ResponseBuilder;
+//import com.googlecode.utterlyidle.Status;
+//import com.googlecode.utterlyidle.proxies.NoProxy;
+//import com.googlecode.utterlyidle.proxies.ProxyFor;
+
 import com.googlecode.utterlyidle.Request;
 import com.googlecode.utterlyidle.Response;
-import com.googlecode.utterlyidle.ResponseBuilder;
-import com.googlecode.utterlyidle.Status;
-import com.googlecode.utterlyidle.proxies.NoProxy;
-import com.googlecode.utterlyidle.proxies.ProxyFor;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -45,266 +48,268 @@ import java.net.URLConnection;
 import java.util.Date;
 import java.util.List;
 
-import static com.googlecode.totallylazy.Callables.first;
-import static com.googlecode.totallylazy.Closeables.using;
-import static com.googlecode.totallylazy.Fields.access;
-import static com.googlecode.totallylazy.Fields.fields;
-import static com.googlecode.totallylazy.Fields.name;
-import static com.googlecode.totallylazy.LazyException.lazyException;
-import static com.googlecode.totallylazy.Maps.pairs;
-import static com.googlecode.totallylazy.Option.option;
-import static com.googlecode.totallylazy.Pair.pair;
-import static com.googlecode.totallylazy.Predicates.is;
-import static com.googlecode.totallylazy.Predicates.not;
-import static com.googlecode.totallylazy.Predicates.where;
-import static com.googlecode.totallylazy.Sequences.sequence;
-import static com.googlecode.totallylazy.Strings.equalIgnoringCase;
-import static com.googlecode.totallylazy.collections.CloseableList.constructors.closeableList;
-import static com.googlecode.totallylazy.numbers.Numbers.greaterThan;
-import static com.googlecode.totallylazy.numbers.Numbers.zero;
-import static com.googlecode.utterlyidle.HttpHeaders.CONTENT_LENGTH;
-import static com.googlecode.utterlyidle.HttpHeaders.CONTENT_TYPE;
-import static com.googlecode.utterlyidle.HttpHeaders.LAST_MODIFIED;
-import static com.googlecode.utterlyidle.Responses.response;
-import static com.googlecode.utterlyidle.Status.NOT_FOUND;
-import static com.googlecode.utterlyidle.Status.OK;
-import static com.googlecode.utterlyidle.Status.status;
-import static com.googlecode.utterlyidle.annotations.HttpMethod.PUT;
+//import static com.googlecode.totallylazy.Callables.first;
+//import static com.googlecode.totallylazy.Closeables.using;
+//import static com.googlecode.totallylazy.Fields.access;
+//import static com.googlecode.totallylazy.Fields.fields;
+//import static com.googlecode.totallylazy.Fields.name;
+//import static com.googlecode.totallylazy.LazyException.lazyException;
+//import static com.googlecode.totallylazy.Maps.pairs;
+//import static com.googlecode.totallylazy.Option.option;
+//import static com.googlecode.totallylazy.Pair.pair;
+//import static com.googlecode.totallylazy.Predicates.is;
+//import static com.googlecode.totallylazy.Predicates.not;
+//import static com.googlecode.totallylazy.Predicates.where;
+//import static com.googlecode.totallylazy.Sequences.sequence;
+//import static com.googlecode.totallylazy.Strings.equalIgnoringCase;
+//import static com.googlecode.totallylazy.collections.CloseableList.constructors.closeableList;
+//import static com.googlecode.totallylazy.numbers.Numbers.greaterThan;
+//import static com.googlecode.totallylazy.numbers.Numbers.zero;
+//import static com.googlecode.utterlyidle.HttpHeaders.CONTENT_LENGTH;
+//import static com.googlecode.utterlyidle.HttpHeaders.CONTENT_TYPE;
+//import static com.googlecode.utterlyidle.HttpHeaders.LAST_MODIFIED;
+//import static com.googlecode.utterlyidle.Responses.response;
+//import static com.googlecode.utterlyidle.Status.NOT_FOUND;
+//import static com.googlecode.utterlyidle.Status.OK;
+//import static com.googlecode.utterlyidle.Status.status;
+//import static com.googlecode.utterlyidle.annotations.HttpMethod.PUT;
 import static java.lang.reflect.Modifier.FINAL;
 
 public class ClientHttpHandler implements HttpClient, Closeable {
     public static final int DEFAULT_TIMEOUT = 0;
-    public static final ProxyFor DEFAULT_PROXY = NoProxy.instance;
-    private final int connectTimeoutMillis;
-    private final int readTimeoutMillis;
-    private final ProxyFor proxies;
-    private final HostnameVerifier hostnameVerifier;
-    private final SSLSocketFactory sslSocketFactory;
-    private final CloseableList<InputStream> closeables = closeableList();
-    private final Integer streamingSize = Integer.getInteger("utterlyidle.client.stream.size", 4000);
-    private final Boolean disableStreaming = Boolean.getBoolean("utterlyidle.client.stream.disable");
+//    public static final ProxyFor DEFAULT_PROXY = NoProxy.instance;
+//    private final int connectTimeoutMillis;
+//    private final int readTimeoutMillis;
+//    private final ProxyFor proxies;
+//    private final HostnameVerifier hostnameVerifier;
+//    private final SSLSocketFactory sslSocketFactory;
+//    private final CloseableList<InputStream> closeables = closeableList();
+//    private final Integer streamingSize = Integer.getInteger("utterlyidle.client.stream.size", 4000);
+//    private final Boolean disableStreaming = Boolean.getBoolean("utterlyidle.client.stream.disable");
 
-    static {
-        System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
-        allowHttpMethods("PATCH");
-    }
+//    static {
+//        System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
+//        allowHttpMethods("PATCH");
+//    }
 
-    public static void allowHttpMethods(String... newMethods) {
-        try {
-            Field methods = removeFinal(fields(HttpURLConnection.class).find(where(name, is("methods"))).get());
-            String[] existingMethods = Fields.get(methods, null);
-            String[] combined = sequence(existingMethods).join(sequence(newMethods)).unique().toArray(String.class);
-            methods.set(null, combined);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    public static void allowHttpMethods(String... newMethods) {
+//        try {
+//            Field methods = removeFinal(fields(HttpURLConnection.class).find(where(name, is("methods"))).get());
+//            String[] existingMethods = Fields.get(methods, null);
+//            String[] combined = sequence(existingMethods).join(sequence(newMethods)).unique().toArray(String.class);
+//            methods.set(null, combined);
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
-    private static Field removeFinal(final Field field) throws NoSuchFieldException, IllegalAccessException {
-        Field modifiers = access(Field.class.getDeclaredField("modifiers"));
-        modifiers.setInt(access(field), field.getModifiers() & ~FINAL);
-        return field;
-    }
-
+//    private static Field removeFinal(final Field field) throws NoSuchFieldException, IllegalAccessException {
+//        Field modifiers = access(Field.class.getDeclaredField("modifiers"));
+//        modifiers.setInt(access(field), field.getModifiers() & ~FINAL);
+//        return field;
+//    }
+//
     public ClientHttpHandler() {
         this(DEFAULT_TIMEOUT);
     }
-
+//
     public ClientHttpHandler(int timeoutMillis) {
-        this(timeoutMillis, timeoutMillis);
+        //this(timeoutMillis, timeoutMillis);
     }
-
-    public ClientHttpHandler(int timeoutMillis, ProxyFor proxyFor) {
-        this(timeoutMillis, timeoutMillis, proxyFor);
-    }
-
-    public ClientHttpHandler(int connectTimeoutMillis, int readTimeoutMillis) {
-        this(connectTimeoutMillis, readTimeoutMillis, DEFAULT_PROXY);
-    }
-
-    public ClientHttpHandler(int connectTimeoutMillis, int readTimeoutMillis, ProxyFor proxies) {
-        this(connectTimeoutMillis, readTimeoutMillis, proxies, HttpsURLConnection.getDefaultHostnameVerifier(), HttpsURLConnection.getDefaultSSLSocketFactory());
-    }
-
-    public ClientHttpHandler(ClientConfiguration configuration) {
-        this(configuration.timeout(), configuration.timeout(), configuration.proxyFor(), configuration.hostnameVerifier(), configuration.sslContext().getSocketFactory());
-    }
-
-    public ClientHttpHandler(int connectTimeoutMillis, int readTimeoutMillis, ProxyFor proxies, HostnameVerifier hostnameVerifier, final SSLSocketFactory sslSocketFactory) {
-        this.connectTimeoutMillis = connectTimeoutMillis;
-        this.readTimeoutMillis = readTimeoutMillis;
-        this.proxies = proxies;
-        this.hostnameVerifier = hostnameVerifier;
-        this.sslSocketFactory = sslSocketFactory;
-    }
-
+//
+//    public ClientHttpHandler(int timeoutMillis, ProxyFor proxyFor) {
+//        this(timeoutMillis, timeoutMillis, proxyFor);
+//    }
+//
+//    public ClientHttpHandler(int connectTimeoutMillis, int readTimeoutMillis) {
+//        this(connectTimeoutMillis, readTimeoutMillis, DEFAULT_PROXY);
+//    }
+//
+//    public ClientHttpHandler(int connectTimeoutMillis, int readTimeoutMillis, ProxyFor proxies) {
+//        this(connectTimeoutMillis, readTimeoutMillis, proxies, HttpsURLConnection.getDefaultHostnameVerifier(), HttpsURLConnection.getDefaultSSLSocketFactory());
+//    }
+//
+//    public ClientHttpHandler(ClientConfiguration configuration) {
+//        this(configuration.timeout(), configuration.timeout(), configuration.proxyFor(), configuration.hostnameVerifier(), configuration.sslContext().getSocketFactory());
+//    }
+//
+//    public ClientHttpHandler(int connectTimeoutMillis, int readTimeoutMillis, ProxyFor proxies, HostnameVerifier hostnameVerifier, final SSLSocketFactory sslSocketFactory) {
+//        this.connectTimeoutMillis = connectTimeoutMillis;
+//        this.readTimeoutMillis = readTimeoutMillis;
+//        this.proxies = proxies;
+//        this.hostnameVerifier = hostnameVerifier;
+//        this.sslSocketFactory = sslSocketFactory;
+//    }
+//
     public ClientHttpHandler(RequestTimeout requestTimeout) {
         this(requestTimeout.value());
     }
-
+//
     public Response handle(final Request request) throws Exception {
-        if(request.uri().scheme().equals("file") && request.method().equals(PUT)) return putFile(request);
-        URLConnection connection = openConnection(request.uri());
-        connection.setUseCaches(false);
-        connection.setConnectTimeout(connectTimeoutMillis);
-        connection.setReadTimeout(readTimeoutMillis);
-        return handle(request, connection);
+        throw new RuntimeException("DAN");
+//        if(request.uri().scheme().equals("file") && request.method().equals(PUT)) return putFile(request);
+//        URLConnection connection = openConnection(request.uri());
+//        connection.setUseCaches(false);
+//        connection.setConnectTimeout(connectTimeoutMillis);
+//        connection.setReadTimeout(readTimeoutMillis);
+//        return handle(request, connection);
     }
+//
+//    private URLConnection openConnection(final Uri uri) {
+//        final URL url = uri.toURL();
+//        return proxies.proxyFor(uri).map(new Mapper<Proxy, URLConnection>() {
+//            @Override
+//            public URLConnection call(final Proxy proxy) throws Exception {
+//                return url.openConnection(proxy);
+//            }
+//        }).getOrElse(new Function<URLConnection>() {
+//            @Override
+//            public URLConnection call() throws Exception {
+//                return url.openConnection();
+//            }
+//        });
+//    }
 
-    private URLConnection openConnection(final Uri uri) {
-        final URL url = uri.toURL();
-        return proxies.proxyFor(uri).map(new Mapper<Proxy, URLConnection>() {
-            @Override
-            public URLConnection call(final Proxy proxy) throws Exception {
-                return url.openConnection(proxy);
-            }
-        }).getOrElse(new Function<URLConnection>() {
-            @Override
-            public URLConnection call() throws Exception {
-                return url.openConnection();
-            }
-        });
-    }
+   // private multi multi;
+//    private Response handle(final Request request, final URLConnection connection) throws IOException {
+//        if(multi == null) multi = new multi(){};
+//        return multi.<Response>methodOption(request, connection).getOrElse(new Function<Response>() {
+//            @Override
+//            public Response call() throws Exception {
+//                return defaultHandle(request, connection);
+//            }
+//        });
+//    }
 
-    private multi multi;
-    private Response handle(final Request request, final URLConnection connection) throws IOException {
-        if(multi == null) multi = new multi(){};
-        return multi.<Response>methodOption(request, connection).getOrElse(new Function<Response>() {
-            @Override
-            public Response call() throws Exception {
-                return defaultHandle(request, connection);
-            }
-        });
-    }
-
-    private Response defaultHandle(final Request request, final URLConnection connection) throws IOException {
-        try {
-            sendRequest(request, connection);
-            return createResponse(connection, OK, entity(connection));
-        } catch (FileNotFoundException e) {
-            return errorResponse(NOT_FOUND, e);
-        }
-    }
-
-    private Response putFile(Request request) throws IOException {
-            File file = request.uri().toFile();
-            Files.write(request.entity().asBytes(), file);
-            for (String date : request.headers().valueOption(LAST_MODIFIED)) file.setLastModified(Dates.parse(date).getTime());
-            return ResponseBuilder.response(Status.CREATED).header(HttpHeaders.LOCATION, request.uri()).build();
-    }
-
-    @multimethod
-    private Response handle(Request request, HttpsURLConnection connection) throws IOException {
-        connection.setHostnameVerifier(hostnameVerifier);
-        connection.setSSLSocketFactory(sslSocketFactory);
-        return handle(request, (HttpURLConnection) connection);
-    }
-
-    @multimethod
-    private Response handle(Request request, HttpURLConnection connection) throws IOException {
-        try {
-            connection.setInstanceFollowRedirects(false);
-            connection.setRequestMethod(request.method());
-            Status status = sendHttpRequest(request, connection);
-            return createResponse(connection, status, entity(connection));
-        } catch (SocketException ex) {
-            return errorResponse(Status.CONNECTION_REFUSED, ex);
-        } catch (SocketTimeoutException ex) {
-            return errorResponse(Status.CLIENT_TIMEOUT, ex);
-        }
-    }
-
-    private void sendRequest(Request request, URLConnection connection) throws IOException {
-        sequence(request.headers()).fold(connection, requestHeaders());
-        if (request.entity().length().is(zero)) return;
-
-        connection.setDoOutput(true);
-        using(connection.getOutputStream(), request.entity().writer());
-    }
-
-    private Status sendHttpRequest(final Request request, final HttpURLConnection connection) throws IOException {
-        sendRequest(request, connection);
-        return status(connection);
-    }
-
-    private Object entity(final URLConnection connection) throws IOException {
-        Option<Integer> length = contentLength(connection);
-        return handleStreamingContent(length, connection.getInputStream());
-    }
-
-    private Object entity(final HttpURLConnection connection) throws IOException {
-        Option<Integer> length = contentLength(connection);
-        if (connection.getResponseCode() >= 400) {
-            return handleStreamingContent(length, connection.getErrorStream());
-        }
-        return handleStreamingContent(length, connection.getInputStream());
-    }
-
-    private Object handleStreamingContent(final Option<Integer> length, final InputStream inputStream) {
-        if( !disableStreaming && (length.isEmpty() || length.is(greaterThan(streamingSize)))) return closeables.manage(inputStream);
-        return using(inputStream, bytes());
-    }
-
-    private static Option<Integer> contentLength(final URLConnection urlConnection) {
-        return option(urlConnection.getHeaderField(CONTENT_LENGTH)).flatMap(new Mapper<String, Integer>() {
-            @Override
-            public Integer call(final String s) throws Exception {
-                return Integer.valueOf(s.trim());
-            }
-        }.optional());
-    }
-
-    public static Response errorResponse(Status status, Exception e) {
-        return response(status, sequence(pair(CONTENT_TYPE, MediaType.TEXT_PLAIN)), Exceptions.asString(e));
-    }
-
-    private Response createResponse(URLConnection connection, Status status, Object entity) {
-        final ResponseBuilder builder = pairs(connection.getHeaderFields()).
-                filter(where(first(String.class), is(not(equalIgnoringCase(HttpHeaders.TRANSFER_ENCODING))))).
-                fold(ResponseBuilder.response(status).entity(entity),
-                        responseHeaders());
-        builder.replaceHeaders(LAST_MODIFIED, new Date(connection.getLastModified()));
-        return builder.build();
-    }
-
-    private static Callable2<? super URLConnection, ? super Pair<String, String>, URLConnection> requestHeaders() {
-        return new Callable2<URLConnection, Pair<String, String>, URLConnection>() {
-            public URLConnection call(URLConnection connection, Pair<String, String> header) throws Exception {
-                connection.setRequestProperty(header.first(), header.second());
-                return connection;
-            }
-        };
-    }
-
-    private static Callable2<ResponseBuilder, Pair<String, List<String>>, ResponseBuilder> responseHeaders() {
-        return new Callable2<ResponseBuilder, Pair<String, List<String>>, ResponseBuilder>() {
-            public ResponseBuilder call(ResponseBuilder response, final Pair<String, List<String>> entry) throws Exception {
-                return sequence(entry.second()).fold(response, responseHeader(entry.first()));
-            }
-        };
-    }
-
-    private static Callable2<ResponseBuilder, String, ResponseBuilder> responseHeader(final String key) {
-        return new Callable2<ResponseBuilder, String, ResponseBuilder>() {
-            public ResponseBuilder call(ResponseBuilder response, String value) throws Exception {
-                if (key != null) {
-                    return response.header(key, value);
-                }
-                return response;
-            }
-        };
-    }
-
-    public static Callable1<InputStream, byte[]> bytes() {
-        return new Callable1<InputStream, byte[]>() {
-            public byte[] call(InputStream stream) throws Exception {
-                return Bytes.bytes(stream);
-            }
-        };
-    }
+//    private Response defaultHandle(final Request request, final URLConnection connection) throws IOException {
+//        try {
+//            sendRequest(request, connection);
+//            return createResponse(connection, OK, entity(connection));
+//        } catch (FileNotFoundException e) {
+//            return errorResponse(NOT_FOUND, e);
+//        }
+//    }
+//
+//    private Response putFile(Request request) throws IOException {
+//            File file = request.uri().toFile();
+//            Files.write(request.entity().asBytes(), file);
+//            for (String date : request.headers().valueOption(LAST_MODIFIED)) file.setLastModified(Dates.parse(date).getTime());
+//            return ResponseBuilder.response(Status.CREATED).header(HttpHeaders.LOCATION, request.uri()).build();
+//    }
+//
+//    @multimethod
+//    private Response handle(Request request, HttpsURLConnection connection) throws IOException {
+//        connection.setHostnameVerifier(hostnameVerifier);
+//        connection.setSSLSocketFactory(sslSocketFactory);
+//        return handle(request, (HttpURLConnection) connection);
+//    }
+//
+//    @multimethod
+//    private Response handle(Request request, HttpURLConnection connection) throws IOException {
+//        try {
+//            connection.setInstanceFollowRedirects(false);
+//            connection.setRequestMethod(request.method());
+//            Status status = sendHttpRequest(request, connection);
+//            return createResponse(connection, status, entity(connection));
+//        } catch (SocketException ex) {
+//            return errorResponse(Status.CONNECTION_REFUSED, ex);
+//        } catch (SocketTimeoutException ex) {
+//            return errorResponse(Status.CLIENT_TIMEOUT, ex);
+//        }
+//    }
+//
+//    private void sendRequest(Request request, URLConnection connection) throws IOException {
+//        sequence(request.headers()).fold(connection, requestHeaders());
+//        if (request.entity().length().is(zero)) return;
+//
+//        connection.setDoOutput(true);
+//        using(connection.getOutputStream(), request.entity().writer());
+//    }
+//
+//    private Status sendHttpRequest(final Request request, final HttpURLConnection connection) throws IOException {
+//        sendRequest(request, connection);
+//        return status(connection);
+//    }
+//
+//    private Object entity(final URLConnection connection) throws IOException {
+//        Option<Integer> length = contentLength(connection);
+//        return handleStreamingContent(length, connection.getInputStream());
+//    }
+//
+//    private Object entity(final HttpURLConnection connection) throws IOException {
+//        Option<Integer> length = contentLength(connection);
+//        if (connection.getResponseCode() >= 400) {
+//            return handleStreamingContent(length, connection.getErrorStream());
+//        }
+//        return handleStreamingContent(length, connection.getInputStream());
+//    }
+//
+//    private Object handleStreamingContent(final Option<Integer> length, final InputStream inputStream) {
+//        if( !disableStreaming && (length.isEmpty() || length.is(greaterThan(streamingSize)))) return closeables.manage(inputStream);
+//        return using(inputStream, bytes());
+//    }
+//
+//    private static Option<Integer> contentLength(final URLConnection urlConnection) {
+//        return option(urlConnection.getHeaderField(CONTENT_LENGTH)).flatMap(new Mapper<String, Integer>() {
+//            @Override
+//            public Integer call(final String s) throws Exception {
+//                return Integer.valueOf(s.trim());
+//            }
+//        }.optional());
+//    }
+//
+//    public static Response errorResponse(Status status, Exception e) {
+//        return response(status, sequence(pair(CONTENT_TYPE, MediaType.TEXT_PLAIN)), Exceptions.asString(e));
+//    }
+//
+//    private Response createResponse(URLConnection connection, Status status, Object entity) {
+//        final ResponseBuilder builder = pairs(connection.getHeaderFields()).
+//                filter(where(first(String.class), is(not(equalIgnoringCase(HttpHeaders.TRANSFER_ENCODING))))).
+//                fold(ResponseBuilder.response(status).entity(entity),
+//                        responseHeaders());
+//        builder.replaceHeaders(LAST_MODIFIED, new Date(connection.getLastModified()));
+//        return builder.build();
+//    }
+//
+//    private static Callable2<? super URLConnection, ? super Pair<String, String>, URLConnection> requestHeaders() {
+//        return new Callable2<URLConnection, Pair<String, String>, URLConnection>() {
+//            public URLConnection call(URLConnection connection, Pair<String, String> header) throws Exception {
+//                connection.setRequestProperty(header.first(), header.second());
+//                return connection;
+//            }
+//        };
+//    }
+//
+//    private static Callable2<ResponseBuilder, Pair<String, List<String>>, ResponseBuilder> responseHeaders() {
+//        return new Callable2<ResponseBuilder, Pair<String, List<String>>, ResponseBuilder>() {
+//            public ResponseBuilder call(ResponseBuilder response, final Pair<String, List<String>> entry) throws Exception {
+//                return sequence(entry.second()).fold(response, responseHeader(entry.first()));
+//            }
+//        };
+//    }
+//
+//    private static Callable2<ResponseBuilder, String, ResponseBuilder> responseHeader(final String key) {
+//        return new Callable2<ResponseBuilder, String, ResponseBuilder>() {
+//            public ResponseBuilder call(ResponseBuilder response, String value) throws Exception {
+//                if (key != null) {
+//                    return response.header(key, value);
+//                }
+//                return response;
+//            }
+//        };
+//    }
+//
+//    public static Callable1<InputStream, byte[]> bytes() {
+//        return new Callable1<InputStream, byte[]>() {
+//            public byte[] call(InputStream stream) throws Exception {
+//                return Bytes.bytes(stream);
+//            }
+//        };
+//    }
 
     @Override
     public void close() throws IOException {
-        closeables.close();
+        throw new RuntimeException("DAN");
+        //closeables.close();
     }
 }

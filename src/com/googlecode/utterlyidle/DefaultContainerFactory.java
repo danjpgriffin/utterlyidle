@@ -6,11 +6,13 @@ import com.googlecode.yadic.closeable.CloseableContainer;
 public class DefaultContainerFactory implements ContainerFactory {
     @Override
     public CloseableContainer newCloseableContainer() {
-        return CloseableContainer.closeableContainer();
+        throw new RuntimeException("DAN");
+        //return CloseableContainer.closeableContainer();
     }
 
     @Override
     public CloseableContainer newCloseableContainer(final Resolver<?> parent) {
-        return CloseableContainer.closeableContainer(parent);
+        throw new RuntimeException("DAN");
+        //return CloseableContainer.closeableContainer(parent);
     }
 }

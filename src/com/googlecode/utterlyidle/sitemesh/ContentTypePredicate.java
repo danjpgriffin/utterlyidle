@@ -6,7 +6,7 @@ import com.googlecode.totallylazy.predicates.LogicalPredicate;
 import com.googlecode.utterlyidle.Request;
 import com.googlecode.utterlyidle.Response;
 
-import static com.googlecode.totallylazy.Callables.second;
+//import static com.googlecode.totallylazy.Callables.second;
 import static com.googlecode.totallylazy.Predicates.where;
 import static com.googlecode.utterlyidle.HttpHeaders.CONTENT_TYPE;
 import static com.googlecode.utterlyidle.Response.methods.header;
@@ -29,7 +29,8 @@ public class ContentTypePredicate implements Predicate<Response> {
     }
 
     public static LogicalPredicate<Pair<Request, Response>> contentType(final String mimeType) {
-        return where(second(Response.class), containsContentType(mimeType));
+        throw new RuntimeException("DAN");
+        //return where(second(Response.class), containsContentType(mimeType));
     }
 
 

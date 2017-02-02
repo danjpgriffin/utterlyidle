@@ -1,1 +1,0 @@
-Decorator is $meta.decorator$

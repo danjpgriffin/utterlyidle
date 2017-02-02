@@ -8,7 +8,7 @@ public class BasePath extends HierarchicalPath {
     }
 
     public BasePath(String value) {
-        super("/" + UriTemplate.trimSlashes(value) + "/");
+        //super("/" + UriTemplate.trimSlashes(value) + "/");
     }
 
 }

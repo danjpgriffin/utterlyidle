@@ -1,36 +1,37 @@
 package com.googlecode.utterlyidle;
 
-import com.googlecode.totallylazy.Callables;
-import com.googlecode.totallylazy.Function1;
+//import com.googlecode.totallylazy.Callables;
+//import com.googlecode.totallylazy.Function1;
 import com.googlecode.totallylazy.Option;
 import com.googlecode.totallylazy.Pair;
 import com.googlecode.totallylazy.Sequence;
-import com.googlecode.totallylazy.Sequences;
-import com.googlecode.totallylazy.predicates.LogicalPredicate;
+//import com.googlecode.totallylazy.Sequences;
+//import com.googlecode.totallylazy.predicates.LogicalPredicate;
 import com.googlecode.utterlyidle.annotations.View;
+import com.googlecode.totallylazy.Function1;
 import com.googlecode.utterlyidle.bindings.actions.Action;
-import com.googlecode.utterlyidle.rendering.ViewName;
+//import com.googlecode.utterlyidle.rendering.ViewName;
 import com.googlecode.yadic.Container;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 
-import static com.googlecode.totallylazy.Option.identity;
-import static com.googlecode.totallylazy.Predicates.where;
-import static com.googlecode.utterlyidle.NamedParameter.methods.defaultValue;
-import static com.googlecode.utterlyidle.rendering.ViewName.viewName;
+//import static com.googlecode.totallylazy.Option.identity;
+//import static com.googlecode.totallylazy.Predicates.where;
+//import static com.googlecode.utterlyidle.NamedParameter.methods.defaultValue;
+//import static com.googlecode.utterlyidle.rendering.ViewName.viewName;
 
 public class Binding  {
-    private final Action action;
-    private final String httpMethod;
-    private final UriTemplate uriTemplate;
-    private final Sequence<String> consumes;
-    private final Sequence<String> produces;
-    private final Sequence<Pair<Type, Option<Parameter>>> parameters;
-    private final int priority;
-    private final boolean hidden;
-    private final View view;
-
+//    private final Action action;
+//    private final String httpMethod;
+//    private final UriTemplate uriTemplate;
+//    private final Sequence<String> consumes;
+//    private final Sequence<String> produces;
+//    private final Sequence<Pair<Type, Option<Parameter>>> parameters;
+//    private final int priority;
+//    private final boolean hidden;
+//    private final View view;
+//
     public Binding(Action action,
                    UriTemplate uriTemplate,
                    String httpMethod,
@@ -40,141 +41,151 @@ public class Binding  {
                    int priority,
                    boolean hidden,
                    final View view) {
-        this.action = action;
-        this.uriTemplate = uriTemplate;
-        this.httpMethod = httpMethod;
-        this.consumes = consumes;
-        this.produces = produces;
-        this.view = view;
-        this.parameters = parameters.realise();
-        this.priority = priority;
-        this.hidden = hidden;
+//        this.action = action;
+//        this.uriTemplate = uriTemplate;
+//        this.httpMethod = httpMethod;
+//        this.consumes = consumes;
+//        this.produces = produces;
+//        this.view = view;
+//        this.parameters = parameters.realise();
+//        this.priority = priority;
+//        this.hidden = hidden;
     }
-
-    public Object invoke(Container container) throws Exception {
-        return action().invoke(container);
-    }
+//
+//    public Object invoke(Container container) throws Exception {
+//        return action().invoke(container);
+//    }
     public Action action() {
-        return action;
+        throw new RuntimeException("DAN");
+        //return action;
     }
-
+//
     public String httpMethod() {
-        return httpMethod;
+        throw new RuntimeException("DAN");
+        //return httpMethod;
     }
-
+//
     public UriTemplate uriTemplate() {
-        return uriTemplate;
+        throw new RuntimeException("DAN");
+        //return uriTemplate;
     }
-
+//
     public Sequence<String> consumes() {
-        return consumes;
+        throw new RuntimeException("DAN");
+        //return consumes;
     }
-
+//
     public Sequence<String> produces() {
-        return produces;
+        throw new RuntimeException("DAN");
+        //return produces;
     }
 
     public Sequence<Pair<Type, Option<Parameter>>> parameters() {
-        return parameters;
+        throw new RuntimeException("DAN");
+        //return parameters;
     }
-
-    public Sequence<NamedParameter> namedParameters() {
-        return parameters.map(Callables.<Option<Parameter>>second()).
-                flatMap(identity(Parameter.class)).
-                safeCast(NamedParameter.class);
-    }
-
-    public int numberOfArguments() {
-        return parameters.size();
-    }
-
-    private int numberOfDefaultArguments() {
-        return namedParameters().flatMap(defaultValue()).size();
-    }
-
+//
+//    public Sequence<NamedParameter> namedParameters() {
+//        return parameters.map(Callables.<Option<Parameter>>second()).
+//                flatMap(identity(Parameter.class)).
+//                safeCast(NamedParameter.class);
+//    }
+//
+//    public int numberOfArguments() {
+//        return parameters.size();
+//    }
+//
+//    private int numberOfDefaultArguments() {
+//        return namedParameters().flatMap(defaultValue()).size();
+//    }
+//
     public int priority() {
-        return priority;
+        throw new RuntimeException("DAN");
+        //return priority;
     }
-
+//
     public boolean hidden() {
-        return hidden;
+        throw new RuntimeException("DAN");
+        //return hidden;
     }
-
-    @Override
-    public int hashCode() {
-        return myFields().hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return obj instanceof Binding && myFields().equals(((Binding) obj).myFields());
-    }
-
-    protected Sequence<Object> myFields() {
-        return Sequences.sequence(action, httpMethod, uriTemplate, consumes, produces, parameters, priority);
-    }
-
-    @Override
-    public String toString() {
-        return String.format("%s %s -> %s", httpMethod, uriTemplate, action.description());
-    }
-
+//
+//    @Override
+//    public int hashCode() {
+//        return myFields().hashCode();
+//    }
+//
+//    @Override
+//    public boolean equals(Object obj) {
+//        return obj instanceof Binding && myFields().equals(((Binding) obj).myFields());
+//    }
+//
+//    protected Sequence<Object> myFields() {
+//        return Sequences.sequence(action, httpMethod, uriTemplate, consumes, produces, parameters, priority);
+//    }
+//
+//    @Override
+//    public String toString() {
+//        return String.format("%s %s -> %s", httpMethod, uriTemplate, action.description());
+//    }
+//
     public View view() {
-        return view;
+        throw new RuntimeException("DAN");
+        //return view;
     }
-
+//
     public static class functions {
-
-        public static LogicalPredicate<Binding> isForMethod(final Method method) {
-            return where(action(), Action.functions.isForMethod(method));
-        }
+//
+//        public static LogicalPredicate<Binding> isForMethod(final Method method) {
+//            return where(action(), Action.functions.isForMethod(method));
+//        }
         public static Function1<Binding, Action> action() {
-            return new Function1<Binding, Action>() {
-                @Override
-                public Action call(Binding binding) throws Exception {
-                    return binding.action();
-                }
-            };
+            throw new RuntimeException("DAN");
+//            return new Function1<Binding, Action>() {
+//                @Override
+//                public Action call(Binding binding) throws Exception {
+//                    return binding.action();
+//                }
+//            };
         }
-
-        public static Function1<Binding, Integer> priority() {
-            return new Function1<Binding, Integer>() {
-                @Override
-                public Integer call(Binding binding) throws Exception {
-                    return binding.priority();
-                }
-            };
-        }
-
-        public static Function1<Binding, Integer> numberOfArguments() {
-            return new Function1<Binding, Integer>() {
-                @Override
-                public Integer call(Binding binding) throws Exception {
-                    return binding.numberOfArguments();
-                }
-            };
-        }
-
-        public static Function1<Binding, Integer> numberOfDefaultArguments() {
-            return new Function1<Binding, Integer>() {
-                @Override
-                public Integer call(Binding binding) throws Exception {
-                    return binding.numberOfDefaultArguments();
-                }
-            };
-        }
-
-
-        public static Function1<Binding, Integer> pathSegments() {
-            return new Function1<Binding, Integer>() {
-                @Override
-                public Integer call(Binding binding) throws Exception {
-                    return binding.uriTemplate().segments();
-
-                }
-            };
-        }
-
+//
+//        public static Function1<Binding, Integer> priority() {
+//            return new Function1<Binding, Integer>() {
+//                @Override
+//                public Integer call(Binding binding) throws Exception {
+//                    return binding.priority();
+//                }
+//            };
+//        }
+//
+//        public static Function1<Binding, Integer> numberOfArguments() {
+//            return new Function1<Binding, Integer>() {
+//                @Override
+//                public Integer call(Binding binding) throws Exception {
+//                    return binding.numberOfArguments();
+//                }
+//            };
+//        }
+//
+//        public static Function1<Binding, Integer> numberOfDefaultArguments() {
+//            return new Function1<Binding, Integer>() {
+//                @Override
+//                public Integer call(Binding binding) throws Exception {
+//                    return binding.numberOfDefaultArguments();
+//                }
+//            };
+//        }
+//
+//
+//        public static Function1<Binding, Integer> pathSegments() {
+//            return new Function1<Binding, Integer>() {
+//                @Override
+//                public Integer call(Binding binding) throws Exception {
+//                    return binding.uriTemplate().segments();
+//
+//                }
+//            };
+//        }
+//
     }
 
 }

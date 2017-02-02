@@ -20,12 +20,13 @@ public class RedirectHttpHandler implements HttpClient {
     }
 
     public Response handle(Request request) throws Exception {
-        Response response = httpHandler.handle(request);
-        if (response.status().isRedirect() && header(response, LOCATION) != null) {
-            return SEE_OTHER.equals(response.status()) ?
-                    handle(get(header(response, LOCATION)).build()) :
-                    handle(modify(request).uri(uri(header(response, LOCATION))).build());
-        }
-        return response;
+        throw new RuntimeException("DAN");
+//        Response response = httpHandler.handle(request);
+//        if (response.status().isRedirect() && header(response, LOCATION) != null) {
+//            return SEE_OTHER.equals(response.status()) ?
+//                    handle(get(header(response, LOCATION)).build()) :
+//                    handle(modify(request).uri(uri(header(response, LOCATION))).build());
+//        }
+//        return response;
     }
 }

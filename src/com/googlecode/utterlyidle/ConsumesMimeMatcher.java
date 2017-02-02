@@ -12,25 +12,27 @@ public class ConsumesMimeMatcher implements Predicate<Request> {
     }
 
     public boolean matches(final Request request) {
-        if (mimeTypes.contains(MediaType.WILDCARD)) return true;
-        return request.headers().valueOption(HttpHeaders.CONTENT_TYPE).exists(new LogicalPredicate<String>() {
-            @Override
-            public boolean matches(final String type) {
-                return mimeTypes.exists(new Predicate<String>() {
-                    public boolean matches(String mimeType) {
-                        return type.startsWith(mimeType);
-                    }
-                });
-            }
-        });
+        throw new RuntimeException("DAN");
+//        if (mimeTypes.contains(MediaType.WILDCARD)) return true;
+//        return request.headers().valueOption(HttpHeaders.CONTENT_TYPE).exists(new LogicalPredicate<String>() {
+//            @Override
+//            public boolean matches(final String type) {
+//                return mimeTypes.exists(new Predicate<String>() {
+//                    public boolean matches(String mimeType) {
+//                        return type.startsWith(mimeType);
+//                    }
+//                });
+//            }
+//        });
     }
 
     public static Predicate<Binding> contentMatches(final Request request) {
-        return new Predicate<Binding>() {
-            public boolean matches(Binding binding) {
-                return new ConsumesMimeMatcher(binding.consumes()).matches(request);
-            }
-        };
+        throw new RuntimeException("DAN");
+//        return new Predicate<Binding>() {
+//            public boolean matches(Binding binding) {
+//                return new ConsumesMimeMatcher(binding.consumes()).matches(request);
+//            }
+//        };
     }
 
 }

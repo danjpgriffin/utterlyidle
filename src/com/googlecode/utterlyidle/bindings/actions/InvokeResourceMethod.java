@@ -3,17 +3,17 @@ package com.googlecode.utterlyidle.bindings.actions;
 import com.googlecode.totallylazy.Sequences;
 import com.googlecode.utterlyidle.Application;
 import com.googlecode.utterlyidle.Binding;
-import com.googlecode.utterlyidle.ExceptionLogger;
-import com.googlecode.utterlyidle.MatchedResource;
-import com.googlecode.utterlyidle.ParametersExtractor;
-import com.googlecode.utterlyidle.Request;
-import com.googlecode.utterlyidle.bindings.MatchedBinding;
+//import com.googlecode.utterlyidle.ExceptionLogger;
+//import com.googlecode.utterlyidle.MatchedResource;
+//import com.googlecode.utterlyidle.ParametersExtractor;
+//import com.googlecode.utterlyidle.Request;
+//import com.googlecode.utterlyidle.bindings.MatchedBinding;
 import com.googlecode.yadic.Container;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import static com.googlecode.totallylazy.Exceptions.toException;
+//import static com.googlecode.totallylazy.Exceptions.toException;
 
 public class InvokeResourceMethod implements Action {
     private final Method method;
@@ -25,36 +25,38 @@ public class InvokeResourceMethod implements Action {
     }
 
     public Object invoke(Container container) throws Exception {
-        Request request = container.get(Request.class);
-        Application application = container.get(Application.class);
-        Binding binding = container.get(MatchedBinding.class).value();
-        try {
-            Class<?> declaringClass = method.getDeclaringClass();
-
-            registerMatchedResource(container, declaringClass);
-
-            Object resourceInstance = container.get(declaringClass);
-            Object[] arguments = new ParametersExtractor(binding.uriTemplate(), application, binding.parameters(), container.get(ExceptionLogger.class)).extract(request);
-            return method.isVarArgs()
-                    ? method.invoke(resourceInstance, (Object) arguments)
-                    : method.invoke(resourceInstance, arguments);
-        } catch (InvocationTargetException e) {
-            throw toException(e.getCause());
-        }
+        throw new RuntimeException("DAN");
+//        Request request = container.get(Request.class);
+//        Application application = container.get(Application.class);
+//        Binding binding = container.get(MatchedBinding.class).value();
+//        try {
+//            Class<?> declaringClass = method.getDeclaringClass();
+//
+//            registerMatchedResource(container, declaringClass);
+//
+//            Object resourceInstance = container.get(declaringClass);
+//            Object[] arguments = new ParametersExtractor(binding.uriTemplate(), application, binding.parameters(), container.get(ExceptionLogger.class)).extract(request);
+//            return method.isVarArgs()
+//                    ? method.invoke(resourceInstance, (Object) arguments)
+//                    : method.invoke(resourceInstance, arguments);
+//        } catch (InvocationTargetException e) {
+//            throw toException(e.getCause());
+//        }
     }
 
     @Override
     public Iterable<ActionMetaData> metaData() {
-        return Sequences.sequence(
-                ResourceClass.constructors.resourceClass(method.getDeclaringClass()),
-                ResourceMethod.constructors.resourceMethod(method))
-                .safeCast(ActionMetaData.class);
+//        return Sequences.sequence(
+//                ResourceClass.constructors.resourceClass(method.getDeclaringClass()),
+//                ResourceMethod.constructors.resourceMethod(method))
+//                .safeCast(ActionMetaData.class);
+        throw new RuntimeException("DAN");
     }
 
-    private void registerMatchedResource(Container container, Class<?> declaringClass) {
-        if (container.contains(MatchedResource.class)) container.remove(MatchedResource.class);
-        container.addInstance(MatchedResource.class, new MatchedResource(declaringClass));
-    }
+//    private void registerMatchedResource(Container container, Class<?> declaringClass) {
+//        if (container.contains(MatchedResource.class)) container.remove(MatchedResource.class);
+//        container.addInstance(MatchedResource.class, new MatchedResource(declaringClass));
+//    }
 
     @Override
     public boolean equals(Object o) {

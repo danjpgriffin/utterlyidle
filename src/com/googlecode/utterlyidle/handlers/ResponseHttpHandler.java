@@ -6,16 +6,17 @@ import com.googlecode.utterlyidle.Response;
 
 public class ResponseHttpHandler implements HttpHandler {
 
-    private final HttpHandler delegate;
-    private final ResponseHandlersFinder responseHandlersFinder;
-
-    public ResponseHttpHandler(final HttpHandler delegate, final ResponseHandlersFinder responseHandlersFinder) {
-        this.delegate = delegate;
-        this.responseHandlersFinder = responseHandlersFinder;
-    }
+//    private final HttpHandler delegate;
+//    private final ResponseHandlersFinder responseHandlersFinder;
+//
+//    public ResponseHttpHandler(final HttpHandler delegate, final ResponseHandlersFinder responseHandlersFinder) {
+//        this.delegate = delegate;
+//        this.responseHandlersFinder = responseHandlersFinder;
+//    }
 
     @Override
     public Response handle(final Request request) throws Exception {
-        return responseHandlersFinder.findAndHandle(request, delegate.handle(request));
+        throw new RuntimeException("DAN");
+        //return responseHandlersFinder.findAndHandle(request, delegate.handle(request));
     }
 }
