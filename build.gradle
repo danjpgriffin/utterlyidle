@@ -55,7 +55,6 @@ dependencies {
     compile 'org.sitemesh:sitemesh:3.0.0'
     compile project(':totallylazy')
     compile project(':yadic')
-    compile project(':lazyrecords')
 
     runtime 'org.objenesis:objenesis:1.2'
 
