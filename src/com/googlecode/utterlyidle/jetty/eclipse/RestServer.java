@@ -4,7 +4,6 @@ import com.googlecode.totallylazy.Callable1;
 import com.googlecode.totallylazy.Option;
 import com.googlecode.totallylazy.Uri;
 import com.googlecode.utterlyidle.Application;
-import com.googlecode.utterlyidle.ApplicationBuilder;
 import com.googlecode.utterlyidle.ServerConfiguration;
 import com.googlecode.utterlyidle.examples.HelloWorldApplication;
 import com.googlecode.utterlyidle.services.Service;
@@ -51,10 +50,6 @@ public class RestServer implements com.googlecode.utterlyidle.Server {
 
     public static RestServer restServer(final Application application, final ServerConfiguration configuration) throws Exception {
         return new RestServer(application, configuration);
-    }
-
-    public static void main(String[] args) throws Exception {
-        ApplicationBuilder.application(HelloWorldApplication.class).start(defaultConfiguration().port(8002));
     }
 
     protected Handler createHandler(Server server){

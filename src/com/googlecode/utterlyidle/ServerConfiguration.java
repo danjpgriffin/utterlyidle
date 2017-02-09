@@ -2,7 +2,6 @@ package com.googlecode.utterlyidle;
 
 import com.googlecode.totallylazy.Option;
 import com.googlecode.totallylazy.Uri;
-import com.googlecode.utterlyidle.httpserver.RestServer;
 import com.googlecode.utterlyidle.ssl.SSL;
 
 import javax.net.ssl.SSLContext;
@@ -30,26 +29,23 @@ public class ServerConfiguration {
     public static final String DEFAULT_THREAD_NUMBER = "50";
     public static final String DEFAULT_BIND_ADDRESS = "0.0.0.0";
     public static final String DEFAULT_PORT = "0";
-    public static final String DEFAULT_CLASS = RestServer.class.getCanonicalName();
 
     private final BasePath basePath;
     private final int maxThreadNumber;
     private final InetAddress bindAddress;
     private final int port;
-    private final Class<? extends Server> serverClass;
     private final Option<SSLContext> sslContext;
 
-    public ServerConfiguration(BasePath basePath, int maxThreadNumber, InetAddress bindAddress, int port, Class<? extends Server> serverClass, final Option<SSLContext> sslContext) {
+    public ServerConfiguration(BasePath basePath, int maxThreadNumber, InetAddress bindAddress, int port, final Option<SSLContext> sslContext) {
         this.basePath = basePath;
         this.maxThreadNumber = maxThreadNumber;
         this.bindAddress = bindAddress;
         this.port = port;
-        this.serverClass = serverClass;
         this.sslContext = sslContext;
     }
 
     public ServerConfiguration() {
-        this(new BasePath(DEFAULT_BASE_PATH), Integer.parseInt(DEFAULT_THREAD_NUMBER), toInetAddress(DEFAULT_BIND_ADDRESS), Integer.parseInt(DEFAULT_PORT), toServer(DEFAULT_CLASS), none(SSLContext.class));
+        this(new BasePath(DEFAULT_BASE_PATH), Integer.parseInt(DEFAULT_THREAD_NUMBER), toInetAddress(DEFAULT_BIND_ADDRESS), Integer.parseInt(DEFAULT_PORT), none(SSLContext.class));
     }
 
     public ServerConfiguration(Properties properties) {
@@ -58,7 +54,6 @@ public class ServerConfiguration {
                 valueOf(properties.getProperty(MAX_THREAD_NUM, DEFAULT_THREAD_NUMBER)),
                 toInetAddress(properties.getProperty(SERVER_BIND_ADDRESS, DEFAULT_BIND_ADDRESS)),
                 valueOf(properties.getProperty(SERVER_PORT, DEFAULT_PORT)),
-                toServer(properties.getProperty(SERVER_CLASS, DEFAULT_CLASS)),
                 toSSLContext(properties.getProperty(SERVER_PROTOCOL, DEFAULT_PROTOCOL)));
     }
 
@@ -71,7 +66,7 @@ public class ServerConfiguration {
     }
 
     public ServerConfiguration basePath(BasePath basePath) {
-        return new ServerConfiguration(basePath, maxThreadNumber, bindAddress, port, serverClass, sslContext);
+        return new ServerConfiguration(basePath, maxThreadNumber, bindAddress, port, sslContext);
     }
 
     public int maxThreadNumber() {
@@ -79,15 +74,11 @@ public class ServerConfiguration {
     }
 
     public ServerConfiguration maxThreadNumber(int maxThreadNumber) {
-        return new ServerConfiguration(basePath, maxThreadNumber, bindAddress, port, serverClass, sslContext);
-    }
-
-    public Class<? extends Server> serverClass() {
-        return serverClass;
+        return new ServerConfiguration(basePath, maxThreadNumber, bindAddress, port, sslContext);
     }
 
     public ServerConfiguration serverClass(Class<? extends Server> serverClass) {
-        return new ServerConfiguration(basePath, maxThreadNumber, bindAddress, port, serverClass, sslContext);
+        return new ServerConfiguration(basePath, maxThreadNumber, bindAddress, port, sslContext);
     }
 
     public InetAddress bindAddress() {
@@ -95,7 +86,7 @@ public class ServerConfiguration {
     }
 
     public ServerConfiguration bindAddress(InetAddress bindAddress) {
-        return new ServerConfiguration(basePath, maxThreadNumber, bindAddress, port, serverClass, sslContext);
+        return new ServerConfiguration(basePath, maxThreadNumber, bindAddress, port, sslContext);
     }
 
     public int port() {
@@ -103,7 +94,7 @@ public class ServerConfiguration {
     }
 
     public ServerConfiguration port(int bindPort) {
-        return new ServerConfiguration(basePath, maxThreadNumber, bindAddress, bindPort, serverClass, sslContext);
+        return new ServerConfiguration(basePath, maxThreadNumber, bindAddress, bindPort, sslContext);
     }
 
     public String protocol() {
@@ -111,7 +102,7 @@ public class ServerConfiguration {
     }
 
     public ServerConfiguration protocol(final String protocol) {
-        return new ServerConfiguration(basePath, maxThreadNumber, bindAddress, port, serverClass, toSSLContext(protocol));
+        return new ServerConfiguration(basePath, maxThreadNumber, bindAddress, port, toSSLContext(protocol));
     }
 
     public Option<SSLContext> sslContext() {
@@ -119,7 +110,7 @@ public class ServerConfiguration {
     }
 
     public ServerConfiguration sslContext(final SSLContext sslContext) {
-        return new ServerConfiguration(basePath, maxThreadNumber, bindAddress, port, serverClass, some(sslContext));
+        return new ServerConfiguration(basePath, maxThreadNumber, bindAddress, port, some(sslContext));
     }
 
     private static Option<SSLContext> toSSLContext(String protocol){
@@ -131,14 +122,6 @@ public class ServerConfiguration {
         try {
             return InetAddress.getByName(address);
         } catch (UnknownHostException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static Class<? extends Server> toServer(String className) {
-        try {
-            return cast(Class.forName(className));
-        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
